@@ -1,9 +1,7 @@
-//tg_bot.service.ts
 import {Injectable, OnModuleInit, Logger} from '@nestjs/common';
 import {Bot, Context} from 'grammy';
 import {FileFlavor, hydrateFiles} from '@grammyjs/files';
 import {ConfigService} from "@nestjs/config";
-import dayjs from 'dayjs';
 import {FileStorageService} from "../file-storage/file-storage.service";
 
 
@@ -39,6 +37,7 @@ export class TgBotService implements OnModuleInit {
                 return
             }
             this.logger.log('////msg:voice////');
+
             const filePath = await this.fileStorageService.downloadAndReturnPath(ctx);
             if (filePath) {
                 ctx.reply('Принял в обработку... 🎙️');

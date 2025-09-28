@@ -10,10 +10,6 @@ export class FileStorageService {
 
     constructor() {
         this.uploadDir = join(process.cwd(), 'uploads');
-        if (!existsSync(this.uploadDir)) {
-            mkdirSync(this.uploadDir, {recursive: true});
-        }
-        this.logger.log(`Папка ${this.uploadDir} создана`);
     }
 
     generateFileName(file_id: string): string {
@@ -31,9 +27,14 @@ export class FileStorageService {
             const fileName = this.generateFileName(ctx.message.voice.file_id);
             const filePath = this.getFilePath(fileName);
 
+            const fileDir = this.uploadDir;
+            if (!existsSync(fileDir)) {
+                mkdirSync(fileDir, { recursive: true });
+                this.logger.log(`Папка ${fileDir} создана`);
+            }
+
             await file.download(filePath);
             this.logger.log(` Голосовое сохранено: ${filePath}`);
-            ctx.reply('Принял в обработку... 🎙️');
             return filePath;
         } catch (e) {
             this.logger.error('Ошибка скачивания файла:', e);

@@ -1,9 +1,12 @@
 import {Module} from '@nestjs/common';
 import {TgBotService} from './tg_bot.service';
-import {FileStorageModule} from "../file-storage/file-storage.module"; // ← ДОБАВИЛ!
+import {ConfigModule} from '@nestjs/config';
+import {FileStorageModule} from "../file-storage/file-storage.module";
 
 @Module({
-    imports: [FileStorageModule],
+    imports: [
+        FileStorageModule,
+        ConfigModule],
     providers: [TgBotService],
     exports: [TgBotService],
 })
